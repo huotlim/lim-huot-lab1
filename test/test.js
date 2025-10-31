@@ -1,6 +1,8 @@
 const request = require('supertest');
+import chai from 'chai';
+
 const app = require('../app');
-const { expect } = require('chai');
+const { expect } = chai;
 describe('GET /', () => {
  it('should return Hello, GitHub Actions!', async () => {
  const res = await request(app).get('/');
