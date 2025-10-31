@@ -40,6 +40,17 @@ jobs:
       - name: Lint code
         run: npm run lint
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests and collect coverage
+        run: |
+          # Run mocha under nyc to produce coverage reports (lcov + text)
+          npx nyc --reporter=lcov --reporter=text mocha --recursive
+          # Ensure coverage directory exists and write a text summary file for easy inspection
+          mkdir -p coverage
+          npx nyc report --reporter=text > coverage/coverage-summary.txt
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
 
