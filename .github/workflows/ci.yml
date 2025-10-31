@@ -7,8 +7,7 @@ concurrency:
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+  pull_request: {} # run CI for all pull requests (no branch filter)
 
 jobs:
   build-and-test:
