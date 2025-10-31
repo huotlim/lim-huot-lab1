@@ -42,14 +42,15 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          npm install --save-dev nyc
+          npm install --no-audit --no-fund --save-dev nyc
           npx nyc --reporter=lcov --reporter=text mocha
           
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
+          # make artifact name unique per matrix job/run to avoid 409 Conflict
+          name: coverage-report-${{ matrix.node-version }}-${{ github.run_id }}
           path: coverage
           
-      - name: Run tests
-        run: npm test
+      # - name: Run tests
+      #   run: npm test
