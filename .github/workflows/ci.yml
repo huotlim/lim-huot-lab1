@@ -1,10 +1,10 @@
-name: Node.js CI (npm)  # ← Workflow name updated for npm
+name: Node.js CI (npm)
 
 on:
   push:
-    branches: [ main ]  # ← Runs when you push to main
+    branches: [main]
   pull_request:
-    branches: [ main ]  # ← Runs when a pull request targets main
+    branches: [main]
 
 jobs:
   build-and-test:
@@ -12,23 +12,23 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]  # ← Test on multiple Node versions
+        node-version: [16.x, 18.x]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # ← Fetch your repo files
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'  # ← Changed from 'yarn' to 'npm' for npm cache
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci  # ← Faster, clean install (uses package-lock.json)
+        run: npm ci
 
       - name: Lint code
-        run: npm run lint  # ← Runs your "lint" script in package.json
+        run: npm run lint
 
       - name: Run tests
-        run: npm test  # ← Runs your "test" script in package.json
+        run: npm test
