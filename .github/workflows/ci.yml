@@ -53,3 +53,8 @@ jobs:
           
       # - name: Run tests
       #   run: npm test
+      - name: Deploy to Vercel
+        if: github.ref == 'refs/heads/main' && success()  # only deploy on main and if tests pass
+        run: |
+          npm install -g vercel
+          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --confirm
