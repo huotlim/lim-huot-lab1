@@ -55,4 +55,4 @@ jobs:
         if: github.ref == 'refs/heads/main' && success()
         run: |
           npm install -g vercel
-          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --confirm
+          vercel --token "${{ secrets.VERCEL_TOKEN }}" --prod --confirm
