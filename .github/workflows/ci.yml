@@ -51,10 +51,9 @@ jobs:
           name: coverage-report-${{ matrix.node-version }}-${{ github.run_id }}
           path: coverage
           
-      # - name: Run tests
-      #   run: npm test
       - name: Deploy to Vercel
-        if: github.ref == 'refs/heads/main' && success()  # only deploy on main and if tests pass
-        run: |
-          npm install -g vercel
-          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --confirm
+  if: github.ref == 'refs/heads/main' && success()
+  run: |
+    npm install -g vercel
+    vercel --token ${{ 9nEMzPHxcV4o86lRfkQacukX }} --prod --confirm
+
