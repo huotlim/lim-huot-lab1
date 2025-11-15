@@ -7,7 +7,7 @@ concurrency:
 on:
   push:
     branches: [main]
-  pull_request: {} # run CI for all pull requests (no branch filter)
+  pull_request: {} # run CI for all pull requests
 
 jobs:
   build-and-test:
@@ -43,17 +43,16 @@ jobs:
         run: |
           npm install --no-audit --no-fund --save-dev nyc
           npx nyc --reporter=lcov --reporter=text mocha
-          
+
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
-          # make artifact name unique per matrix job/run to avoid 409 Conflict
+          # unique artifact name for each matrix job
           name: coverage-report-${{ matrix.node-version }}-${{ github.run_id }}
           path: coverage
-          
-      - name: Deploy to Vercel
-  if: github.ref == 'refs/heads/main' && success()
-  run: |
-    npm install -g vercel
-    vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --confirm
 
+      - name: Deploy to Vercel
+        if: github.ref == 'refs/heads/main' && success()
+        run: |
+          npm install -g vercel
+          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --confirm
